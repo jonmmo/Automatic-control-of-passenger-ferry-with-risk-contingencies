@@ -1,12 +1,13 @@
-function [mode, WP_out] = supervisor(dock_pos, init_pos, mode, eta, nu, COLAV_index, alpha_d, p_o, indicator)
+function [mode, WP_out] = supervisor(dock_pos, init_pos, mode, ... 
+    eta, nu, COLAV_index, alpha_d, p_o, indicator)
 % Supervisor function to determine operation mode
 % Takes in all data available and decides on mode based on an indicator
 % function.
 
 persistent flag WP
 d_undock = 10;  %distance from start dock to first WP
-d_dock =15;     %distance from target dock to start docking phase from crossing
-d_dock_direct = 25; % distance to go directly to docking phase from undocking
+d_dock =15;     %distance from target dock to start docking  from crossing
+d_dock_direct = 25; % distance to go directly to docking from undocking
 
 u = nu(1);
 
@@ -24,13 +25,15 @@ end
 
 
 %% Determine mode, different depending on current mode
-d2_init = (eta(1)-init_pos(1))^2 + (eta(2)-init_pos(2))^2; % squared distance to init pos
-d2_target = (eta(1)-dock_pos(1))^2 + (eta(2)-dock_pos(2))^2; % squared distance to target dock
+% squared distance to origin and target dock
+d2_init = (eta(1)-init_pos(1))^2 + (eta(2)-init_pos(2))^2; 
+d2_target = (eta(1)-dock_pos(1))^2 + (eta(2)-dock_pos(2))^2; 
 
 if mode == 1    % undocking
     if COLAV_index ~= 0
         mode = 4;   % only crash stop available in undocking phase 
-    elseif d2_init > d_undock^2 && d2_target > d_dock_direct^2    %switch to crossing
+    elseif d2_init > d_undock^2 && d2_target > d_dock_direct^2   
+        %switch to crossing
         mode = 2;
         clear guidance_CBF
         if norm(eta(1:2) - WP(:,2)) > 0.2
@@ -44,7 +47,8 @@ elseif mode == 2    % crossing
         mode = 4;
     elseif COLAV_index ~= 0    % COLAV failed
         if indicator == 0
-            mode = collision_indicator(eta, nu, alpha_d, p_o(:,COLAV_index));  %dynamic constraints
+            mode = collision_indicator(eta, nu, alpha_d, ...
+                p_o(:,COLAV_index));  %dynamic constraints
         else
             mode = collision_indicator2(eta, nu, p_o);          %RIF
         end

@@ -1,4 +1,5 @@
-function [eta_d, v, pd_s, pd_ss, obj_index, alpha_d] = guidance_CBF(WP, h, p_o, mode, eta, nu)
+function [eta_d, v, pd_s, pd_ss, obj_index, alpha_d] = guidance_CBF ...
+    (WP, h, p_o, mode, eta, nu)
 % guidance function to generate desired position. Based on a straight line
 % parametrization with tangential heading. Safety checked by a CBF to avoid
 % collisions. 
@@ -50,14 +51,16 @@ function [eta_d, v, pd_s, pd_ss, obj_index, alpha_d] = guidance_CBF(WP, h, p_o, 
         u_s = u_betad * tanh(k_beta * (s_1 + lambda));
     elseif (s_1 > (1 - lambda)/2 ) && mode == 2
         k_beta = (norm(pd_s(1))*a_betac) / u_betac^2;
-        u_s = (u_betad + u_betac) * tanh(k_beta * (1 + lambda - s_1)/delta_us);
+        u_s = (u_betad + u_betac) * tanh(k_beta * (1 + ... 
+            lambda - s_1)/delta_us);
     else
         k_beta = (norm(pd_s(1))*a_betac) / u_betac^2;
         u_s = u_betad + u_betac * tanh(k_beta * (s_1 + lambda));
     end
     sigma_p = 1; %activation signal, always 1 for now
     s1_dot = sigma_p*u_s/ norm(pd_s(1));
-    s2_dot = -0.25*tanh(s_2/delta_s2_dot); %bring vessel back on path, zero if on path
+    s2_dot = -0.25*tanh(s_2/delta_s2_dot);
+    %bring vessel back on path, zero if on path
     
     %% Obstacle avoidance
     s_dot = [s1_dot s2_dot]';
@@ -72,7 +75,8 @@ function [eta_d, v, pd_s, pd_ss, obj_index, alpha_d] = guidance_CBF(WP, h, p_o, 
         alpha(j) = gamma*B(j);
     end
 
-    %% If s_dot is unsafe - quadratic optimization problem to find safe s_dot
+    %% If s_dot is unsafe:
+    % quadratic optimization problem to find safe s_dot
     if sum(B_dot < -alpha) ~= 0
         %weight matrix - to be tuned
         Q = [50 0; 0 1];
@@ -88,7 +92,8 @@ function [eta_d, v, pd_s, pd_ss, obj_index, alpha_d] = guidance_CBF(WP, h, p_o, 
         ub = [0.1;0.005] - s_dot;
         %find new x
         options = optimset('Display', 'off');
-        [x, ~, exitflag, ~] = quadprog(Q, [0 0]', A, b,[], [],lb, ub, [0,0]', options);
+        [x, ~, exitflag, ~] = quadprog(Q, [0 0]', A, b,[], [],lb, ...
+            ub, [0,0]', options);
         s_dot = x + s_dot;
         alpha_d = atan(s_dot(2) / s_dot(1)); % desired heading change
     end    
