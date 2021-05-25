@@ -49,7 +49,7 @@ switch sim
             p_o = [33; 35];
         end
     case 6
-        if i == 850
+        if i == 870
             p_o = [8 43 58;
                 18 57 48];
         end

@@ -38,7 +38,7 @@ for j = 1:size(p_o,2)
     a=viscircles(flip(p_o(:,j))', 5);
     b=viscircles(flip(p_o(:,j))', 10.5, 'Color', 'y');
 end
-plot(x(5, 860), x(4, 860), 'Bo');
+plot(x(5, 870), x(4, 870), 'Bo');
 legend('Vessel position','Desired position', ...
     'Transit waypoints', 'Dock', 'Final position',  ...
     'Initial position', 'Detection point', 'Location', 'SE');
