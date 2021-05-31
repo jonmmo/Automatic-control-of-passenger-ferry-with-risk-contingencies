@@ -53,6 +53,11 @@ switch sim
             p_o = [8 43 58;
                 18 57 48];
         end
+    case 61
+        if i == 870
+            p_o = [8 43;
+                  18 57];
+        end
 end
 
 end
