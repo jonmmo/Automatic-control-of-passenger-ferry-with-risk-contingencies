@@ -18,5 +18,5 @@ function [tau, flag] = crash_stop_control( nu_hat, eta_hat, psi_d, c)
     psi_e = ssa(psi - psi_d);
     r_e = r;
     tau(3) = -c.Kp * psi_e - c.Kd * r_e;    % PD control law. Eq (15.160) in Fossen
-    tau = thrust_limitation(tau, 0);        % limit ythrust
+    tau = thrust_limitation(tau, 0);        % limit thrust
 end

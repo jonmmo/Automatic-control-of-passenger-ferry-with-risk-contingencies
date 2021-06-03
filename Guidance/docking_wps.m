@@ -12,7 +12,6 @@ p_2 = p_3 + R_d*[0; 0.5*p.L];
 
 dist = R_d'*p_0 - R_d'*p_2; %differences in BODY-frame
 p_1 = p_2 + R_d*[0.5*dist(1); 0.5*dist(2)];
-% p_1 = p_3 + R_d*[0.33*dist(1); 0.66*dist(2)];
 
 WP = [p_0 p_1 p_2 p_3];
 end

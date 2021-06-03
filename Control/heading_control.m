@@ -5,8 +5,6 @@ function tau = heading_control(eta_hat, nu_hat, psi_d, r_d, u_d, ud_dot, c)
     r = nu_hat(3);
     
     %% Surge force (speed controller)
-%     tau_X = u_d*c.Xu/(c.t_thr-1); %(6.136)
-%     tau_X = ((c.m - c.Xuu)*ud_dot - c.Xu*u_d) / (1-c.t_thr);
     [M,C,D] = comp_matrices_surge_decoupled_mod(nu_hat);
     nu_d = [u_d 0 0]';
     nu_d_dot = [ud_dot 0 0]';

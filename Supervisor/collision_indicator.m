@@ -1,7 +1,7 @@
 function mode = collision_indicator(eta, nu, alpha_d, p_o)
 % Indicator function to determine best action in a COLAV situation. Takes
 % the vessel state and obstacle position as input, and returns best action.
-% Mode 4 = crash stop   \\ Mode 5 = evasive maneuver
+% Mode 4 = crash stop  Mode 5/6 = evasive maneuver starboard/port 
     %% Input & constants
     U = sqrt(nu(1)^2 + nu(2)^2);
     r_s = 5; 
@@ -30,7 +30,7 @@ function mode = collision_indicator(eta, nu, alpha_d, p_o)
     a_safe = U /t;  % necessary acceleration
     omega_safe = alpha_d / t;   % necessary angular velocity
     
-    %% Relation between necessary and possible manauver parameters
+    %% Ratio between necessary and possible manauver parameters
     p_cs = abs(a_safe /a_max);
     p_em = abs(omega_safe / omega_max);
     if p_cs < p_em 
