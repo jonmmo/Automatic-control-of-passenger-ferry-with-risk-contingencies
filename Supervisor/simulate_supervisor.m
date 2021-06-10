@@ -1,15 +1,7 @@
 for i=2:iteration
     %% Supervisor function
     [mode, WP] = supervisor(eta_dock(1:2), eta_0(1:2), mode, x(4:6,i-1), x(1:3, i-1), COLAV_index, alpha_d, p_o, indicator);
-    if i == 540
-%         p_o = [28 30 27 23;
-%                27 33 35 37];
-%        p_o = [31 ; 38];
-%        p_o = [34; 34]; 
-%         p_o = [30  40; 
-%                44  38];
-%           p_o = [27; 40];
-    end
+
      %% Change parameters for simulation
     [mode, p_o] = change_params(sim, mode, p_o, i);
     
@@ -66,7 +58,8 @@ for i=2:iteration
         x(12, i) = psi_d;
     else                      % nominal control and DP. 
         x(10:12, i) = eta_d; 
-%         if norm(eta_d(1:2) - x(4:5, i)) > d_safe  % too far from p_d, enter MRC
+        % too far from p_d, enter MRC. Not used.
+%         if norm(eta_d(1:2) - x(4:5, i)) > d_safe  
 %             COLAV_index = -1;
 %         end
     end

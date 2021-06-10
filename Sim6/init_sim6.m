@@ -9,13 +9,11 @@ milliAmpere_setup;
 eta_0 = [0,0,0]';
 nu_0 = [0,0,0]';
 tau_0 = [0,0,0]';
-R = 2;
 mode = 1;
 dWP = [];
 WP = [];
 
 eta_dock = [80 100 5*pi/6]';
-nu_d = [1 1 0.1]';
 p_o = [8 ; 18];
 
 % Settings
@@ -34,7 +32,7 @@ DP_flag = 0;
 COLAV_index = 0;
 alpha_d = 0;
 sim = 6;
-indicator = 1;
+indicator = 1;  % 0 means dynamics-based, 1 is RF.
 
 simulate_supervisor;
 % simulate_parameter_tests;

@@ -1,7 +1,7 @@
 function mode = collision_indicator2(eta, nu, p_o)
     %% Constants
     a_max = 0.42;
-    omega_max = 1.2;
+    omega_max = 1.2; %0.48;
 
     %% Calculate risk for crash stop and evasive maneuver
     n_obs = size(p_o, 2);
