@@ -30,7 +30,7 @@ cs_flag = 0;
 DP_flag = 0;
 COLAV_index = 0;
 alpha_d = 0;
-indicator = 0;  % 0 means dynamics-based, 1 is RF.
+indicator = 1;  % 0 means dynamics-based, 1 is RF.
 
 sim = 5;
 simulate_supervisor;
